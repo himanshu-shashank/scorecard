@@ -1,5 +1,6 @@
 package com.himanshu.scorecard.service;
 
+import com.himanshu.scorecard.exception.InvalidScoreException;
 import com.himanshu.scorecard.model.BattingSide;
 import com.himanshu.scorecard.model.Player;
 
@@ -44,7 +45,7 @@ public class ScoreCalculatorService {
                 teamBatting.setOnStrikePlayer(teamBatting.getPlayersQueue().poll());
 
         }
-        else if(Integer.parseInt(value)>=0 && Integer.parseInt(value) <= 6){
+        else if(value.matches("[0-6]")){
             int runScored = Integer.parseInt(value);
 
             if(runScored%2==1) {
@@ -72,7 +73,8 @@ public class ScoreCalculatorService {
             }
 
             teamBatting.setTotalRunScored(teamBatting.getTotalRunScored()+runScored);
-        }
+
+        } else throw new InvalidScoreException();
     }
 
     public void swapPlayers() {
